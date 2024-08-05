@@ -1,7 +1,9 @@
 # flutter_drawer_plus
-[![pub package](https://img.shields.io/badge/pub-1.0.0+1-orange.svg)](https://pub.dartlang.org/packages/flutter_inner_drawer)
+![Pub Version](https://img.shields.io/pub/v/flutter_drawer_plus)
+
 
 > This is a fork from [flutter_inner_drawer](https://pub.dartlang.org/packages/futter_inner_drawer)
+
 
 Drawer Plus is an easy way to create an internal side section (left/right) where you can insert a list menu or other.
 
