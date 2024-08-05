@@ -553,7 +553,7 @@ class DrawerPlusState extends State<DrawerPlus>
   }
 
   /// Trigger Area
-  Widget? _trigger(AlignmentDirectional alignment, Widget? child) {
+  Widget _trigger(AlignmentDirectional alignment, Widget? child) {
     final bool drawerIsStart = _position == DrawerPlusDirection.start;
     final EdgeInsets padding = MediaQuery.of(context).padding;
     double dragAreaWidth = drawerIsStart ? padding.left : padding.right;
@@ -574,7 +574,7 @@ class DrawerPlusState extends State<DrawerPlus>
         ),
       );
     } else {
-      return null;
+      return const SizedBox.shrink();
     }
   }
 
@@ -613,7 +613,7 @@ class DrawerPlusState extends State<DrawerPlus>
             excludeFromSemantics: true,
             child: RepaintBoundary(
               child: Stack(
-                children: <Widget?>[
+                children: [
                   ///Gradient
                   Container(
                     width: _controller.value == 0 ||
@@ -625,15 +625,18 @@ class DrawerPlusState extends State<DrawerPlus>
                   Align(
                     alignment: _drawerOuterAlignment,
                     child: Align(
-                        alignment: _drawerInnerAlignment,
-                        widthFactor: wFactor,
-                        child: RepaintBoundary(child: _scaffold())),
+                      alignment: _drawerInnerAlignment,
+                      widthFactor: wFactor,
+                      child: RepaintBoundary(
+                        child: _scaffold(),
+                      ),
+                    ),
                   ),
 
                   ///Trigger
                   _trigger(AlignmentDirectional.centerStart, _leftChild),
                   _trigger(AlignmentDirectional.centerEnd, _rightChild),
-                ].where((a) => a != null).toList() as List<Widget>,
+                ],
               ),
             ),
           ),

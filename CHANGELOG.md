@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Add multiple improvements from forked package.
+
 ## 1.0.0+2
 
 - Add multiple improvements from forked package.
