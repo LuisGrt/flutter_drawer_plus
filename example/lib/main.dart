@@ -7,19 +7,23 @@ import 'example_2.dart';
 import 'example_3.dart';
 import 'notifier/drawer_notifier.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-      create: (context) => DrawerNotifier(),
-      child: MyApp(),
-    ));
+void main() => runApp(
+      ChangeNotifierProvider(
+        create: (context) => DrawerNotifier(),
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Inner Drawer',
+      title: 'Drawer Plus',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        backgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blueGrey,
+          backgroundColor: Colors.white,
+        ),
       ),
       home: MainApp(),
     );
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
 enum Example { one, two, three }
 
 class MainApp extends StatefulWidget {
-  MainApp({Key key}) : super(key: key);
+  MainApp({super.key});
 
   @override
   _MainAppState createState() => _MainAppState();
@@ -37,10 +41,10 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
   bool isOpened = false;
-  AnimationController _animationController;
-  Animation<Color> _buttonColor;
-  Animation<double> _animateIcon;
-  Animation<double> _translateButton;
+  late AnimationController _animationController;
+  late Animation<Color?> _buttonColor;
+  late Animation<double> _animateIcon;
+  late Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
@@ -50,11 +54,13 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
   initState() {
     super.initState();
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      //systemNavigationBarColor: Colors.blue,
-      statusBarColor: Colors.transparent,
-      //statusBarBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        //systemNavigationBarColor: Colors.blue,
+        statusBarColor: Colors.transparent,
+        //statusBarBrightness: Brightness.dark,
+      ),
+    );
 
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500))
@@ -66,14 +72,16 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
     _buttonColor = ColorTween(
       begin: Colors.black45,
       end: Colors.red,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(
-        0.00,
-        1.00,
-        curve: Curves.linear,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Interval(
+          0.00,
+          1.00,
+          curve: Curves.linear,
+        ),
       ),
-    ));
+    );
     _translateButton = Tween<double>(
       begin: _fabHeight,
       end: -14.0,
@@ -140,29 +148,26 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
     switch (example) {
       case Example.one:
         return ExampleOne();
-        break;
       case Example.two:
         return ExampleTwo();
-        break;
       case Example.three:
         return ExampleThree();
-        break;
     }
   }
 
-  Widget _item({String title, Example example}) {
+  Widget _item({required String title, required Example example}) {
     //print(((_translateButton.value-66)/60).abs());
     double val = ((_translateButton.value - 56) / 60).abs();
     Color color;
     switch (example) {
       case Example.one:
-        color = Colors.green[300];
+        color = Colors.green.shade300;
         break;
       case Example.two:
-        color = Colors.orange[300];
+        color = Colors.orange.shade300;
         break;
       default:
-        color = Colors.blue[300];
+        color = Colors.blue.shade300;
     }
 
     return Opacity(

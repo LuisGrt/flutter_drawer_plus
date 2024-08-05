@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 
 class DrawerNotifier extends ChangeNotifier {
   double swipeOffset = 0;
   bool onTapToClose = false;
   bool swipe = true;
   bool tapScaffold = true;
-  InnerDrawerAnimation animationType = InnerDrawerAnimation.static;
+  DrawerPlusAnimation animationType = DrawerPlusAnimation.static;
   double offset = 0.4;
   Color colorTransition = Colors.black54;
 
-  InnerDrawerDirection direction = InnerDrawerDirection.start;
+  DrawerPlusDirection direction = DrawerPlusDirection.start;
 
   void setSwipeOffset(double value) {
     swipeOffset = value;
@@ -32,7 +32,7 @@ class DrawerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAnimationType(InnerDrawerAnimation t) {
+  void setAnimationType(DrawerPlusAnimation t) {
     animationType = t;
     notifyListeners();
   }
@@ -42,7 +42,7 @@ class DrawerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDirection(InnerDrawerDirection d) {
+  void setDirection(DrawerPlusDirection d) {
     direction = d;
     notifyListeners();
   }

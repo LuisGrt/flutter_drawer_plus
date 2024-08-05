@@ -1,29 +1,19 @@
-import 'package:example/env.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
-
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 
 class ExampleTwo extends StatefulWidget {
-  ExampleTwo({Key key}) : super(key: key);
+  ExampleTwo({super.key});
 
   @override
   _ExampleTwoState createState() => _ExampleTwoState();
 }
 
 class _ExampleTwoState extends State<ExampleTwo> {
-  final GlobalKey<InnerDrawerState> _innerDrawerKey =
-      GlobalKey<InnerDrawerState>();
+  final GlobalKey<DrawerPlusState> _innerDrawerKey =
+      GlobalKey<DrawerPlusState>();
 
-  GlobalKey _keyRed = GlobalKey();
-  double _width = 10;
-
-  bool _onTapToClose = false;
   bool _swipe = true;
-  bool _tapScaffold = true;
-  InnerDrawerAnimation _animationType = InnerDrawerAnimation.static;
+  DrawerPlusAnimation _animationType = DrawerPlusAnimation.static;
   bool _proportionalChildArea = true;
   double _horizontalOffset = 0.4;
   double _verticalOffset = 0.4;
@@ -31,14 +21,8 @@ class _ExampleTwoState extends State<ExampleTwo> {
   double _scale = 0.9;
   double _borderRadius = 50;
 
-  AnimationController _animationController;
-  Animation<Color> _bkgColor;
-
-  String _title = "Two";
-
   @override
   void initState() {
-    _getwidthContainer();
     super.initState();
   }
 
@@ -49,22 +33,9 @@ class _ExampleTwoState extends State<ExampleTwo> {
 
   Color currentColor = Colors.black54;
 
-  void _getwidthContainer() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final keyContext = _keyRed.currentContext;
-      if (keyContext != null) {
-        final RenderBox box = keyContext.findRenderObject();
-        final size = box.size;
-        setState(() {
-          _width = size.width;
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return InnerDrawer(
+    return DrawerPlus(
       key: _innerDrawerKey,
       onTapClose: true,
       offset: IDOffset.only(
@@ -82,7 +53,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
       leftAnimationType: _animationType,
       rightAnimationType: _animationType,
       leftChild: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.surface,
           child: Center(
             child: Container(
               child: Text(
@@ -92,7 +63,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
             ),
           )),
       rightChild: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.surface,
           child: Center(
             child: Container(
               child: Text(
@@ -131,17 +102,17 @@ class _ExampleTwoState extends State<ExampleTwo> {
                           Checkbox(
                               activeColor: Colors.black,
                               value:
-                                  _animationType == InnerDrawerAnimation.static,
+                                  _animationType == DrawerPlusAnimation.static,
                               onChanged: (a) {
                                 setState(() {
-                                  _animationType = InnerDrawerAnimation.static;
+                                  _animationType = DrawerPlusAnimation.static;
                                 });
                               }),
                         ],
                       ),
                       onTap: () {
                         setState(() {
-                          _animationType = InnerDrawerAnimation.static;
+                          _animationType = DrawerPlusAnimation.static;
                         });
                       },
                     ),
@@ -152,10 +123,10 @@ class _ExampleTwoState extends State<ExampleTwo> {
                           Checkbox(
                               activeColor: Colors.black,
                               value:
-                                  _animationType == InnerDrawerAnimation.linear,
+                                  _animationType == DrawerPlusAnimation.linear,
                               onChanged: (a) {
                                 setState(() {
-                                  _animationType = InnerDrawerAnimation.linear;
+                                  _animationType = DrawerPlusAnimation.linear;
                                 });
                               }),
                           Text('Linear'),
@@ -163,7 +134,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                       ),
                       onTap: () {
                         setState(() {
-                          _animationType = InnerDrawerAnimation.linear;
+                          _animationType = DrawerPlusAnimation.linear;
                         });
                       },
                     ),
@@ -174,11 +145,11 @@ class _ExampleTwoState extends State<ExampleTwo> {
                           Checkbox(
                               activeColor: Colors.black,
                               value: _animationType ==
-                                  InnerDrawerAnimation.quadratic,
+                                  DrawerPlusAnimation.quadratic,
                               onChanged: (a) {
                                 setState(() {
                                   _animationType =
-                                      InnerDrawerAnimation.quadratic;
+                                      DrawerPlusAnimation.quadratic;
                                 });
                               }),
                           Text('Quadratic'),
@@ -186,7 +157,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                       ),
                       onTap: () {
                         setState(() {
-                          _animationType = InnerDrawerAnimation.quadratic;
+                          _animationType = DrawerPlusAnimation.quadratic;
                         });
                       },
                     ),
@@ -228,9 +199,9 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         SliderTheme(
                           data: Theme.of(context).sliderTheme.copyWith(
                                 valueIndicatorTextStyle: Theme.of(context)
-                                    .accentTextTheme
-                                    .body2
-                                    .copyWith(color: Colors.white),
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white),
                               ),
                           child: Slider(
                             activeColor: Colors.black,
@@ -317,9 +288,9 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         SliderTheme(
                           data: Theme.of(context).sliderTheme.copyWith(
                                 valueIndicatorTextStyle: Theme.of(context)
-                                    .accentTextTheme
-                                    .body2
-                                    .copyWith(color: Colors.white),
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white),
                               ),
                           child: Slider(
                             activeColor: Colors.black,
@@ -359,9 +330,9 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         SliderTheme(
                           data: Theme.of(context).sliderTheme.copyWith(
                                 valueIndicatorTextStyle: Theme.of(context)
-                                    .accentTextTheme
-                                    .body2
-                                    .copyWith(color: Colors.white),
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white),
                               ),
                           child: Slider(
                             activeColor: Colors.black,
@@ -374,13 +345,17 @@ class _ExampleTwoState extends State<ExampleTwo> {
                                 value.round().toString(),
                             label: '$_scale',
                             onChanged: (a) {
-                              setState(() {
-                                _scale = a;
-                              });
+                              setState(
+                                () {
+                                  _scale = a;
+                                },
+                              );
                             },
                           ),
                         ),
-                        Text(_scale.toString()),
+                        Text(
+                          _scale.toString(),
+                        ),
                         //Text(_fontSize.toString()),
                       ],
                     ),
@@ -398,9 +373,9 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         SliderTheme(
                           data: Theme.of(context).sliderTheme.copyWith(
                                 valueIndicatorTextStyle: Theme.of(context)
-                                    .accentTextTheme
-                                    .body2
-                                    .copyWith(color: Colors.white),
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: Colors.white),
                               ),
                           child: Slider(
                             activeColor: Colors.black,

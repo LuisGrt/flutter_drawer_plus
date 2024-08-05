@@ -1,37 +1,24 @@
-import 'dart:math';
-
-import 'package:example/env.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
-
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 
 class ExampleThree extends StatefulWidget {
-  ExampleThree({Key key}) : super(key: key);
+  ExampleThree({super.key});
 
   @override
   _ExampleThreeState createState() => _ExampleThreeState();
 }
 
 class _ExampleThreeState extends State<ExampleThree> {
-  final GlobalKey<InnerDrawerState> _innerDrawerKey =
-      GlobalKey<InnerDrawerState>();
-
-  GlobalKey _keyRed = GlobalKey();
-  double _width = 10;
+  final GlobalKey<DrawerPlusState> _innerDrawerKey =
+      GlobalKey<DrawerPlusState>();
 
   double _borderRadius = 50;
 
-  AnimationController _animationController;
-  Animation<Color> _bkgColor;
-
-  String _title = "Three";
+  late FocusNode myFocusNode;
+  late FocusNode myFocusNode2;
 
   @override
   void initState() {
-    _getwidthContainer();
     myFocusNode = FocusNode();
     myFocusNode2 = FocusNode();
     super.initState();
@@ -46,33 +33,17 @@ class _ExampleThreeState extends State<ExampleThree> {
 
   Color currentColor = Colors.black54;
 
-  void _getwidthContainer() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final keyContext = _keyRed.currentContext;
-      if (keyContext != null) {
-        final RenderBox box = keyContext.findRenderObject();
-        final size = box.size;
-        setState(() {
-          _width = size.width;
-        });
-      }
-    });
-  }
-
-  FocusNode myFocusNode;
-  FocusNode myFocusNode2;
-
   @override
   Widget build(BuildContext context) {
-    return InnerDrawer(
+    return DrawerPlus(
       key: _innerDrawerKey,
       onTapClose: true,
       //tapScaffoldEnabled: true,
       borderRadius: _borderRadius,
       swipeChild: true,
-      leftAnimationType: InnerDrawerAnimation.quadratic,
+      leftAnimationType: DrawerPlusAnimation.quadratic,
       leftChild: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.surface,
           child: Center(
             child: Container(
                 child: Column(
@@ -103,8 +74,8 @@ class _ExampleThreeState extends State<ExampleThree> {
             end: Alignment.bottomLeft,
             //stops: [0.1, 0.5,0.5, 0.7, 0.9],
             colors: [
-              Colors.green[200],
-              Colors.green[500],
+              Colors.green.shade200,
+              Colors.green.shade500,
             ],
           ),
         ),
@@ -127,7 +98,7 @@ class _ExampleThreeState extends State<ExampleThree> {
           ),
         ),
       ),
-      innerDrawerCallback: (a) {
+      drawerPlusCallback: (a) {
         print(a);
         if (a) {
           myFocusNode2.requestFocus();

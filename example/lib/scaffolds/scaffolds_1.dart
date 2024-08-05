@@ -1,41 +1,57 @@
 import 'package:example/notifier/drawer_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 import 'package:provider/provider.dart';
 
-class ScaffoldDrawer extends StatelessWidget {
-  Color pickerColor;
-  final GlobalKey<InnerDrawerState> innerDrawerKey;
+class ScaffoldDrawer extends StatefulWidget {
+  final GlobalKey<DrawerPlusState>? innerDrawerKey;
 
-  ScaffoldDrawer({this.innerDrawerKey});
+  const ScaffoldDrawer({this.innerDrawerKey, super.key});
+
+  @override
+  State<ScaffoldDrawer> createState() => ScaffoldDrawerState();
+}
+
+class ScaffoldDrawerState extends State<ScaffoldDrawer> {
+  late DrawerNotifier drawer;
+  late Color pickerColor;
+
+  @override
+  void initState() {
+    super.initState();
+
+    drawer = Provider.of<DrawerNotifier>(context, listen: true);
+    pickerColor = drawer.colorTransition;
+  }
+
+  @override
+  void dispose() {
+    drawer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print("scaffold 1");
-
-    final drawer = Provider.of<DrawerNotifier>(context, listen: true);
-    pickerColor = drawer.colorTransition;
-
     return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              ColorTween(
-                begin: Colors.blueAccent,
-                end: Colors.blueGrey[400].withRed(100),
-              ).lerp(drawer.swipeOffset),
-              ColorTween(
-                begin: Colors.green,
-                end: Colors.blueGrey[800].withGreen(80),
-              ).lerp(drawer.swipeOffset),
-            ],
-          ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            ColorTween(
+              begin: Colors.blueAccent,
+              end: Colors.blueGrey.shade400.withRed(100),
+            ).lerp(drawer.swipeOffset)!,
+            ColorTween(
+              begin: Colors.green,
+              end: Colors.blueGrey.shade800.withGreen(80),
+            ).lerp(drawer.swipeOffset)!,
+          ],
         ),
-        child: SafeArea(
-            child: Material(
+      ),
+      child: SafeArea(
+        child: Material(
           color: Colors.transparent,
           child: DefaultTextStyle(
             style: TextStyle(color: Colors.grey[100]),
@@ -62,15 +78,15 @@ class ScaffoldDrawer extends StatelessWidget {
                             Checkbox(
                                 activeColor: Colors.black,
                                 value: drawer.animationType ==
-                                    InnerDrawerAnimation.static,
+                                    DrawerPlusAnimation.static,
                                 onChanged: (a) {
                                   drawer.setAnimationType(
-                                      InnerDrawerAnimation.static);
+                                      DrawerPlusAnimation.static);
                                 }),
                           ],
                         ),
                         onTap: () {
-                          drawer.setAnimationType(InnerDrawerAnimation.static);
+                          drawer.setAnimationType(DrawerPlusAnimation.static);
                         },
                       ),
                       GestureDetector(
@@ -80,16 +96,16 @@ class ScaffoldDrawer extends StatelessWidget {
                             Checkbox(
                                 activeColor: Colors.black,
                                 value: drawer.animationType ==
-                                    InnerDrawerAnimation.linear,
+                                    DrawerPlusAnimation.linear,
                                 onChanged: (a) {
                                   drawer.setAnimationType(
-                                      InnerDrawerAnimation.linear);
+                                      DrawerPlusAnimation.linear);
                                 }),
                             Text('Linear'),
                           ],
                         ),
                         onTap: () {
-                          drawer.setAnimationType(InnerDrawerAnimation.linear);
+                          drawer.setAnimationType(DrawerPlusAnimation.linear);
                         },
                       ),
                       GestureDetector(
@@ -99,17 +115,17 @@ class ScaffoldDrawer extends StatelessWidget {
                             Checkbox(
                                 activeColor: Colors.black,
                                 value: drawer.animationType ==
-                                    InnerDrawerAnimation.quadratic,
+                                    DrawerPlusAnimation.quadratic,
                                 onChanged: (a) {
                                   drawer.setAnimationType(
-                                      InnerDrawerAnimation.quadratic);
+                                      DrawerPlusAnimation.quadratic);
                                 }),
                             Text('Quadratic'),
                           ],
                         ),
                         onTap: () {
                           drawer
-                              .setAnimationType(InnerDrawerAnimation.quadratic);
+                              .setAnimationType(DrawerPlusAnimation.quadratic);
                         },
                       ),
                     ],
@@ -188,9 +204,9 @@ class ScaffoldDrawer extends StatelessWidget {
                           SliderTheme(
                             data: Theme.of(context).sliderTheme.copyWith(
                                   valueIndicatorTextStyle: Theme.of(context)
-                                      .accentTextTheme
-                                      .body2
-                                      .copyWith(color: Colors.white),
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: Colors.white),
                                 ),
                             child: Slider(
                               activeColor: Colors.black,
@@ -210,19 +226,24 @@ class ScaffoldDrawer extends StatelessWidget {
                               },
                             ),
                           ),
-                          Text(drawer.offset.toString()),
+                          Text(
+                            drawer.offset.toString(),
+                          ),
                           //Text(_fontSize.toString()),
                         ],
                       ),
                     ],
                   ),
-                  Padding(padding: EdgeInsets.all(10)),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
                   TextButton(
                     child: Text(
                       "Set Color Transition",
                       style: TextStyle(
-                          color: drawer.colorTransition,
-                          fontWeight: FontWeight.w500),
+                        color: drawer.colorTransition,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     onPressed: () {
                       showDialog(
@@ -234,7 +255,7 @@ class ScaffoldDrawer extends StatelessWidget {
                               child: ColorPicker(
                                 pickerColor: drawer.colorTransition,
                                 onColorChanged: (Color color) =>
-                                    pickerColor = color,
+                                    setState(() => pickerColor = color),
                                 //enableLabel: true,
                                 pickerAreaHeightPercent: 0.8,
                               ),
@@ -259,13 +280,15 @@ class ScaffoldDrawer extends StatelessWidget {
                     onPressed: () {
                       // direction is optional
                       // if not set, the last direction will be used
-                      innerDrawerKey.currentState.toggle();
+                      widget.innerDrawerKey?.currentState?.toggle();
                     },
                   ),
                 ],
               ),
             ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 }

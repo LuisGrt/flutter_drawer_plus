@@ -1,27 +1,25 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 import '../env.dart';
 
 class RightChild extends StatelessWidget {
   final bool _position = true;
-  final GlobalKey<InnerDrawerState> innerDrawerKey;
-  RightChild({this.innerDrawerKey, Key key}) : super(key: key);
+  final GlobalKey<DrawerPlusState>? innerDrawerKey;
+
+  RightChild({this.innerDrawerKey, super.key});
 
   @override
   Widget build(BuildContext context) {
-    print("build right");
-
     return Material(
         child: SafeArea(
-            //top: false,
             right: false,
             left: false,
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
-                    left: BorderSide(width: 1, color: Colors.grey[200]),
-                    right: BorderSide(width: 1, color: Colors.grey[200])),
+                  left: BorderSide(width: 1, color: Colors.grey.shade200),
+                  right: BorderSide(width: 1, color: Colors.grey.shade200),
+                ),
               ),
               child: Stack(
                 children: <Widget>[
@@ -39,16 +37,20 @@ class RightChild extends StatelessWidget {
                                     width: 15,
                                     height: 15,
                                     child: CircleAvatar(
-                                      child: Icon(Icons.person,
-                                          color: Colors.white, size: 12),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                        size: 12,
+                                      ),
                                       backgroundColor: Colors.grey,
                                     ),
                                   ),
                                   Text(
                                     "   Guest",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.2),
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.2,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -62,7 +64,7 @@ class RightChild extends StatelessWidget {
                                     size: 18,
                                   ),
                                   onTap: () {
-                                    innerDrawerKey.currentState.toggle();
+                                    innerDrawerKey?.currentState?.toggle();
                                   },
                                 ),
                               ),
@@ -110,7 +112,7 @@ class RightChild extends StatelessWidget {
                             //color: Colors.grey,
                             border: Border(
                                 top: BorderSide(
-                          color: Colors.grey[300],
+                          color: Colors.grey.shade300,
                         ))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
