@@ -1,3 +1,7 @@
+## 1.0.0+2
+
+- Add multiple improvements from forked package.
+
 ## [1.0.0+1] - 2021-03-17.
 
 * [Fixed] - Improvement null safety support.

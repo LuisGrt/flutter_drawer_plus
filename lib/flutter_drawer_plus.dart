@@ -15,7 +15,9 @@ typedef DrawerPlusCallback = void Function(bool isOpened);
 /// Signature for when a pointer that is in contact with the screen and moves to the right or left
 /// values between 1 and 0
 typedef InnerDragUpdateCallback = void Function(
-    double value, DrawerPlusDirection? direction);
+  double value,
+  DrawerPlusDirection? direction,
+);
 
 /// The possible position of a [DrawerPlus].
 enum DrawerPlusDirection {
@@ -60,7 +62,10 @@ class DrawerPlus extends StatefulWidget {
     this.backgroundDecoration,
     this.drawerPlusCallback,
     this.onDragUpdate,
-  })  : assert(leftChild != null || rightChild != null),
+  })  : assert(
+          leftChild != null || rightChild != null,
+          'One of leftChild or rightChild must be provided.',
+        ),
         super(key: key);
 
   /// Left child
@@ -256,7 +261,7 @@ class DrawerPlusState extends State<DrawerPlus>
   void _updateWidth() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox? box =
-          _drawerKey.currentContext!.findRenderObject() as RenderBox?;
+          _drawerKey.currentContext?.findRenderObject() as RenderBox?;
       //final RenderBox box = context.findRenderObject();
       if (box != null && box.hasSize && box.size.width > 300) {
         setState(() {
@@ -652,14 +657,16 @@ class IDOffset {
     this.top = 0.0,
     this.right = 0.0,
     this.bottom = 0.0,
-  })  : assert(top >= 0.0 &&
-            top <= 1.0 &&
-            left >= 0.0 &&
-            left <= 1.0 &&
-            right >= 0.0 &&
-            right <= 1.0 &&
-            bottom >= 0.0 &&
-            bottom <= 1.0),
+  })  : assert(
+            top >= 0.0 &&
+                top <= 1.0 &&
+                left >= 0.0 &&
+                left <= 1.0 &&
+                right >= 0.0 &&
+                right <= 1.0 &&
+                bottom >= 0.0 &&
+                bottom <= 1.0,
+            'All values (top, left, right, bottom) must be between 0.0 and 1.0.'),
         assert(top >= 0.0 && bottom == 0.0 || top == 0.0 && bottom >= 0.0);
 
   /// The offset from the left.
