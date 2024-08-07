@@ -4,35 +4,15 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 import 'package:provider/provider.dart';
 
-class ScaffoldDrawer extends StatefulWidget {
+class ScaffoldDrawer extends StatelessWidget {
   final GlobalKey<DrawerPlusState>? innerDrawerKey;
 
   const ScaffoldDrawer({this.innerDrawerKey, super.key});
 
   @override
-  State<ScaffoldDrawer> createState() => ScaffoldDrawerState();
-}
-
-class ScaffoldDrawerState extends State<ScaffoldDrawer> {
-  late DrawerNotifier drawer;
-  late Color pickerColor;
-
-  @override
-  void initState() {
-    super.initState();
-
-    drawer = Provider.of<DrawerNotifier>(context, listen: true);
-    pickerColor = drawer.colorTransition;
-  }
-
-  @override
-  void dispose() {
-    drawer.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final drawer = Provider.of<DrawerNotifier>(context, listen: true);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -56,15 +36,15 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
           child: DefaultTextStyle(
             style: TextStyle(color: Colors.grey[100]),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  Text(
+                  const Text(
                     "Animation Type",
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
@@ -74,7 +54,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                       GestureDetector(
                         child: Row(
                           children: <Widget>[
-                            Text('Static'),
+                            const Text('Static'),
                             Checkbox(
                                 activeColor: Colors.black,
                                 value: drawer.animationType ==
@@ -101,7 +81,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                                   drawer.setAnimationType(
                                       DrawerPlusAnimation.linear);
                                 }),
-                            Text('Linear'),
+                            const Text('Linear'),
                           ],
                         ),
                         onTap: () {
@@ -120,7 +100,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                                   drawer.setAnimationType(
                                       DrawerPlusAnimation.quadratic);
                                 }),
-                            Text('Quadratic'),
+                            const Text('Quadratic'),
                           ],
                         ),
                         onTap: () {
@@ -130,7 +110,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                       ),
                     ],
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   Row(
@@ -146,7 +126,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                                 onChanged: (a) {
                                   drawer.setSwipe(!drawer.swipe);
                                 }),
-                            Text('Swipe'),
+                            const Text('Swipe'),
                           ],
                         ),
                         onTap: () {
@@ -163,7 +143,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                                 onChanged: (a) {
                                   drawer.setTapScaffold(!drawer.tapScaffold);
                                 }),
-                            Text('TapScaffoldEnabled'),
+                            const Text('TapScaffoldEnabled'),
                           ],
                         ),
                         onTap: () {
@@ -172,7 +152,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                       ),
                     ],
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   GestureDetector(
@@ -185,19 +165,19 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                             onChanged: (a) {
                               drawer.setOnTapToClose(!drawer.onTapToClose);
                             }),
-                        Text('OnTap To Close'),
+                        const Text('OnTap To Close'),
                       ],
                     ),
                     onTap: () {
                       drawer.setOnTapToClose(!drawer.onTapToClose);
                     },
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   Column(
                     children: <Widget>[
-                      Text('Offset'),
+                      const Text('Offset'),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -234,7 +214,7 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                       ),
                     ],
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   TextButton(
@@ -254,17 +234,16 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                             content: SingleChildScrollView(
                               child: ColorPicker(
                                 pickerColor: drawer.colorTransition,
-                                onColorChanged: (Color color) =>
-                                    setState(() => pickerColor = color),
+                                onColorChanged: (Color color) => drawer.setColorTransition(color: color),
                                 //enableLabel: true,
                                 pickerAreaHeightPercent: 0.8,
                               ),
                             ),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Set'),
+                                child: const Text('Set'),
                                 onPressed: () {
-                                  drawer.setColorTransition(pickerColor);
+                                  drawer.setColorTransition();
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -274,13 +253,13 @@ class ScaffoldDrawerState extends State<ScaffoldDrawer> {
                       );
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(25)),
+                  const Padding(padding: EdgeInsets.all(25)),
                   ElevatedButton(
-                    child: Text("open"),
+                    child: const Text("open"),
                     onPressed: () {
                       // direction is optional
                       // if not set, the last direction will be used
-                      widget.innerDrawerKey?.currentState?.toggle();
+                      innerDrawerKey?.currentState?.toggle();
                     },
                   ),
                 ],

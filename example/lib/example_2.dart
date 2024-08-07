@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 
 class ExampleTwo extends StatefulWidget {
-  ExampleTwo({super.key});
+  const ExampleTwo({super.key});
 
   @override
-  _ExampleTwoState createState() => _ExampleTwoState();
+  State<ExampleTwo> createState() => _ExampleTwoState();
 }
 
 class _ExampleTwoState extends State<ExampleTwo> {
   final GlobalKey<DrawerPlusState> _innerDrawerKey =
       GlobalKey<DrawerPlusState>();
 
-  bool _swipe = true;
+  final bool _swipe = true;
   DrawerPlusAnimation _animationType = DrawerPlusAnimation.static;
   bool _proportionalChildArea = true;
   double _horizontalOffset = 0.4;
@@ -38,14 +38,14 @@ class _ExampleTwoState extends State<ExampleTwo> {
     return DrawerPlus(
       key: _innerDrawerKey,
       onTapClose: true,
-      offset: IDOffset.only(
+      offset: DPOffset.only(
           top: _topBottom ? _verticalOffset : 0.0,
           bottom: !_topBottom ? _verticalOffset : 0.0,
           right: _horizontalOffset,
           left: _horizontalOffset),
-      scale: IDOffset.horizontal(_scale),
+      scale: DPOffset.horizontal(_scale),
       borderRadius: _borderRadius,
-      duration: Duration(milliseconds: 11200),
+      duration: const Duration(milliseconds: 11200),
       swipe: _swipe,
       proportionalChildArea: _proportionalChildArea,
       //backgroundColor: Colors.red,
@@ -54,28 +54,25 @@ class _ExampleTwoState extends State<ExampleTwo> {
       rightAnimationType: _animationType,
       leftChild: Material(
           color: Theme.of(context).colorScheme.surface,
-          child: Center(
-            child: Container(
-              child: Text(
-                "Left Child",
-                style: TextStyle(fontSize: 18),
-              ),
+          child: const Center(
+            child: Text(
+              "Left Child",
+              style: TextStyle(fontSize: 18),
             ),
           )),
       rightChild: Material(
-          color: Theme.of(context).colorScheme.surface,
-          child: Center(
-            child: Container(
-              child: Text(
-                "Right Child",
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          )),
+        color: Theme.of(context).colorScheme.surface,
+        child: const Center(
+          child: Text(
+            "Right Child",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
       scaffold: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 30),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(vertical: 30),
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomLeft,
@@ -98,7 +95,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     GestureDetector(
                       child: Row(
                         children: <Widget>[
-                          Text('Static'),
+                          const Text('Static'),
                           Checkbox(
                               activeColor: Colors.black,
                               value:
@@ -129,7 +126,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                                   _animationType = DrawerPlusAnimation.linear;
                                 });
                               }),
-                          Text('Linear'),
+                          const Text('Linear'),
                         ],
                       ),
                       onTap: () {
@@ -152,7 +149,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                                       DrawerPlusAnimation.quadratic;
                                 });
                               }),
-                          Text('Quadratic'),
+                          const Text('Quadratic'),
                         ],
                       ),
                       onTap: () {
@@ -163,7 +160,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     ),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 GestureDetector(
@@ -178,7 +175,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               _proportionalChildArea = !_proportionalChildArea;
                             });
                           }),
-                      Text('ProportionalChildArea'),
+                      const Text('ProportionalChildArea'),
                     ],
                   ),
                   onTap: () {
@@ -187,12 +184,12 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     });
                   },
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 Column(
                   children: <Widget>[
-                    Text('Horizontal Offset'),
+                    const Text('Horizontal Offset'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -229,12 +226,12 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     ),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 Column(
                   children: <Widget>[
-                    Text('Vertical Offset'),
+                    const Text('Vertical Offset'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -250,7 +247,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                                       _topBottom = true;
                                     });
                                   }),
-                              Text('Top'),
+                              const Text('Top'),
                             ],
                           ),
                           onTap: () {
@@ -271,7 +268,7 @@ class _ExampleTwoState extends State<ExampleTwo> {
                                       _topBottom = false;
                                     });
                                   }),
-                              Text('Bottom'),
+                              const Text('Bottom'),
                             ],
                           ),
                           onTap: () {
@@ -318,12 +315,12 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     ),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 Column(
                   children: <Widget>[
-                    Text('Scale'),
+                    const Text('Scale'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -361,12 +358,12 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     ),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 Column(
                   children: <Widget>[
-                    Text('Border Radius'),
+                    const Text('Border Radius'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[

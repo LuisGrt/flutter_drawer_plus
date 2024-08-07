@@ -1,3 +1,11 @@
+## 1.1.0
+
+- **BREAKING CHANGE**
+  - `IDOffset` variable name was change to `DPOffset`
+- Code reorganization.
+- Fix bugs
+- Fix example
+
 ## 1.0.1
 
 - Add multiple improvements from forked package.

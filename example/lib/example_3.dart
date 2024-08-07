@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drawer_plus/flutter_drawer_plus.dart';
 
 class ExampleThree extends StatefulWidget {
-  ExampleThree({super.key});
+  const ExampleThree({super.key});
 
   @override
-  _ExampleThreeState createState() => _ExampleThreeState();
+  State<ExampleThree> createState() => _ExampleThreeState();
 }
 
 class _ExampleThreeState extends State<ExampleThree> {
   final GlobalKey<DrawerPlusState> _innerDrawerKey =
       GlobalKey<DrawerPlusState>();
 
-  double _borderRadius = 50;
+  final double _borderRadius = 50;
 
   late FocusNode myFocusNode;
   late FocusNode myFocusNode2;
@@ -45,29 +45,28 @@ class _ExampleThreeState extends State<ExampleThree> {
       leftChild: Material(
           color: Theme.of(context).colorScheme.surface,
           child: Center(
-            child: Container(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Left Child",
-                  style: TextStyle(fontSize: 18),
-                ),
-                TextField(
-                  focusNode: myFocusNode2,
-                ),
-                /*ListView.builder(
-                  itemCount: 5,
-                  itemBuilder:(BuildContext context, int index){
-                    return ListTile(title: Text('test $index'),);
-                  },
-                )*/
-              ],
-            )),
+            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+            const Text(
+              "Left Child",
+              style: TextStyle(fontSize: 18),
+            ),
+            TextField(
+              focusNode: myFocusNode2,
+            ),
+            /*ListView.builder(
+              itemCount: 5,
+              itemBuilder:(BuildContext context, int index){
+                return ListTile(title: Text('test $index'),);
+              },
+            )*/
+                          ],
+                        ),
           )),
       scaffold: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -84,13 +83,13 @@ class _ExampleThreeState extends State<ExampleThree> {
             color: Colors.transparent,
             child: Container(
                 height: double.infinity,
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   children: <Widget>[
                     TextField(
                       focusNode: myFocusNode,
                     ),
-                    TextField(
+                    const TextField(
                         //  focusNode: myFocusNode,
                         ),
                   ],
@@ -99,7 +98,6 @@ class _ExampleThreeState extends State<ExampleThree> {
         ),
       ),
       drawerPlusCallback: (a) {
-        print(a);
         if (a) {
           myFocusNode2.requestFocus();
         } else {

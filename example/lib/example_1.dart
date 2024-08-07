@@ -10,6 +10,8 @@ import 'scaffolds/scaffolds_1.dart';
 class ExampleOne extends StatelessWidget {
   final GlobalKey<DrawerPlusState> _innerDrawerKey = GlobalKey<DrawerPlusState>();
 
+  ExampleOne({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DrawerPlus(
@@ -22,7 +24,7 @@ class ExampleOne extends StatelessWidget {
       ),
       velocity: 20,
       swipeChild: true,
-      offset: IDOffset.horizontal(
+      offset: DPOffset.horizontal(
         context.select(
           (DrawerNotifier value) => value.offset,
         ),
@@ -48,12 +50,9 @@ class ExampleOne extends StatelessWidget {
       scaffold: ScaffoldDrawer(innerDrawerKey: _innerDrawerKey),
 
       onDragUpdate: (double value, DrawerPlusDirection? direction) {
-        //BAD: DO NOT DO THIS, take it as a general example.
-        // We working to find a solution.
-        //drawerNotifier.setSwipeOffset(value);
-        context.read<DrawerNotifier>().setSwipeOffset(value);
+        final drawerNotifier = Provider.of<DrawerNotifier>(context, listen: false);
+        drawerNotifier.setSwipeOffset(value);
       },
-      //innerDrawerCallback: (a) => print(a),
     );
   }
 }

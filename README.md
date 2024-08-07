@@ -1,5 +1,6 @@
 # flutter_drawer_plus
-![Pub Version](https://img.shields.io/pub/v/flutter_drawer_plus)
+[![Pub Version](https://img.shields.io/pub/v/flutter_drawer_plus)](https://pub.dev/packages/flutter_drawer_plus)
+![GitHub License](https://img.shields.io/github/license/LuisGrt/flutter_drawer_plus)
 
 
 > This is a fork from [flutter_inner_drawer](https://pub.dartlang.org/packages/futter_inner_drawer)
@@ -11,7 +12,7 @@ Drawer Plus is an easy way to create an internal side section (left/right) where
 Add this to your package's pubspec.yaml file:
 ```yaml
 dependencies:
-  flutter_drawer_plus: "^1.0.0+1"
+  flutter_drawer_plus: "^1.1.0"
 ```
 ## Demo
 <div>

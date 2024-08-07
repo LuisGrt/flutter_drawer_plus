@@ -47,8 +47,8 @@ class DrawerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setColorTransition(Color c) {
-    colorTransition = c;
+  void setColorTransition({Color color = Colors.black54}) {
+    colorTransition = color;
     notifyListeners();
   }
 }
