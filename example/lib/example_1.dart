@@ -8,7 +8,8 @@ import 'children/right_child_1.dart';
 import 'scaffolds/scaffolds_1.dart';
 
 class ExampleOne extends StatelessWidget {
-  final GlobalKey<DrawerPlusState> _innerDrawerKey = GlobalKey<DrawerPlusState>();
+  final GlobalKey<DrawerPlusState> _innerDrawerKey =
+      GlobalKey<DrawerPlusState>();
 
   ExampleOne({super.key});
 
@@ -42,15 +43,14 @@ class ExampleOne extends StatelessWidget {
         (DrawerNotifier value) => value.animationType,
       ),
       rightAnimationType: DrawerPlusAnimation.linear,
-
       leftChild: LeftChild(),
-
       rightChild: RightChild(innerDrawerKey: _innerDrawerKey),
-
       scaffold: ScaffoldDrawer(innerDrawerKey: _innerDrawerKey),
-
       onDragUpdate: (double value, DrawerPlusDirection? direction) {
-        final drawerNotifier = Provider.of<DrawerNotifier>(context, listen: false);
+        final drawerNotifier = Provider.of<DrawerNotifier>(
+          context,
+          listen: false,
+        );
         drawerNotifier.setSwipeOffset(value);
       },
     );

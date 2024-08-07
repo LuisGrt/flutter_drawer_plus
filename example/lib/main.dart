@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Drawer Plus',
+      title: 'Flutter Drawer Plus Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.blueGrey,
@@ -42,14 +42,13 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
-  bool isOpened = false;
   late AnimationController _animationController;
   late Animation<Color?> _buttonColor;
   late Animation<double> _animateIcon;
   late Animation<double> _translateButton;
   final Curve _curve = Curves.easeOut;
   final double _fabHeight = 56.0;
-
+  bool isOpened = false;
   Example _currentExample = Example.one;
 
   @override
@@ -64,13 +63,18 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
       ),
     );
 
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 500),)
-          ..addListener(() {
-            setState(() {});
-          });
-    _animateIcon =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..addListener(() {
+        setState(() {});
+      });
+    _animateIcon = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      _animationController,
+    );
     _buttonColor = ColorTween(
       begin: Colors.black45,
       end: Colors.red,
@@ -87,14 +91,16 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
     _translateButton = Tween<double>(
       begin: _fabHeight,
       end: -14.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(
-        0.0,
-        0.75,
-        curve: _curve,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Interval(
+          0.0,
+          0.75,
+          curve: _curve,
+        ),
       ),
-    ));
+    );
   }
 
   @override
@@ -151,16 +157,16 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
       case Example.one:
         return ExampleOne();
       case Example.two:
-        return ExampleTwo();
+        return const ExampleTwo();
       case Example.three:
-        return ExampleThree();
+        return const ExampleThree();
     }
   }
 
   Widget _item({required String title, required Example example}) {
-    //print(((_translateButton.value-66)/60).abs());
     double val = ((_translateButton.value - 56) / 60).abs();
     Color color;
+
     switch (example) {
       case Example.one:
         color = Colors.green.shade300;
@@ -182,11 +188,13 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
           _animate();
         },
         tooltip: 'Apri',
-        child: Text(title,
-            style: TextStyle(
-              fontSize: 11,
-              color: color,
-            )),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 11,
+            color: color,
+          ),
+        ),
       ),
     );
   }

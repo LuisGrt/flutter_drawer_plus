@@ -26,8 +26,8 @@ class RightChild extends StatelessWidget {
                   ListView(
                     children: <Widget>[
                       Padding(
-                          padding:
-                              const EdgeInsets.only(top: 12, bottom: 4, left: 15),
+                          padding: const EdgeInsets.only(
+                              top: 12, bottom: 4, left: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -55,7 +55,8 @@ class RightChild extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 2, right: 25),
+                                padding:
+                                    const EdgeInsets.only(top: 2, right: 25),
                                 child: GestureDetector(
                                   child: Icon(
                                     _position
@@ -105,8 +106,10 @@ class RightChild extends StatelessWidget {
                       Container(
                         alignment: Alignment.bottomLeft,
                         margin: const EdgeInsets.only(top: 50),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 25,
+                        ),
                         //width: double.maxFinite,
                         decoration: BoxDecoration(
                             //color: Colors.grey,

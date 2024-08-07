@@ -1,5 +1,5 @@
 // DrawerPlus is based on Drawer.
-// The source code of the Drawer has been re-adapted for Inner Drawer.
+// The source code of the Drawer has been re-adapted for Drawer Plus.
 
 // more details:
 // https://github.com/flutter/flutter/blob/master/packages/flutter/lib/src/material/drawer.dart
@@ -22,7 +22,7 @@ typedef InnerDragUpdateCallback = void Function(
 );
 
 class DrawerPlus extends StatefulWidget {
-  const DrawerPlus({
+  DrawerPlus({
     GlobalKey? key,
     this.leftChild,
     this.rightChild,
@@ -37,7 +37,6 @@ class DrawerPlus extends StatefulWidget {
     this.swipeChild = false,
     this.duration,
     this.velocity = 1,
-    this.boxShadow,
     this.colorTransitionChild,
     this.colorTransitionScaffold,
     this.leftAnimationType = DrawerPlusAnimation.static,
@@ -45,10 +44,18 @@ class DrawerPlus extends StatefulWidget {
     this.backgroundDecoration,
     this.drawerPlusCallback,
     this.onDragUpdate,
+    List<BoxShadow>? boxShadow,
   })  : assert(
           leftChild != null || rightChild != null,
           'One of leftChild or rightChild must be provided.',
         ),
+        boxShadow = boxShadow ??
+            [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 5,
+              ),
+            ],
         super(key: key);
 
   /// Left child
@@ -93,7 +100,7 @@ class DrawerPlus extends StatefulWidget {
   final double velocity;
 
   /// BoxShadow of scaffold open
-  final List<BoxShadow>? boxShadow;
+  final List<BoxShadow> boxShadow;
 
   ///Color of gradient background
   final Color? colorTransitionChild;
@@ -193,11 +200,10 @@ class DrawerPlusState extends State<DrawerPlus>
   }
 
   void _animationStatusChanged(AnimationStatus status) {
-    final bool opened = _animationController.value < 0.5 ? true : false;
+    final bool opened = _animationController.value < 0.5;
 
     switch (status) {
       case AnimationStatus.reverse:
-        break;
       case AnimationStatus.forward:
         break;
       case AnimationStatus.dismissed:
@@ -232,7 +238,7 @@ class DrawerPlusState extends State<DrawerPlus>
 
   void _handleDragDown(DragDownDetails details) {
     _animationController.stop();
-    //_ensureHistoryEntry();
+    // _ensureHistoryEntry();
   }
 
   /// get width of screen after initState
@@ -320,11 +326,11 @@ class DrawerPlusState extends State<DrawerPlus>
           _animationController.fling(velocity: visualVelocity);
           break;
       }
-    } else if (_animationController.value < 0.5) {
-      open();
-    } else {
-      close();
+
+      return;
     }
+
+    _animationController.value < .5 ? open() : close();
   }
 
   void open({DrawerPlusDirection? direction}) {
@@ -339,11 +345,9 @@ class DrawerPlusState extends State<DrawerPlus>
 
   /// Open or Close DrawerPlus
   void toggle({DrawerPlusDirection? direction}) {
-    if (_previouslyOpened) {
-      close(direction: direction);
-    } else {
-      open(direction: direction);
-    }
+    _previouslyOpened
+        ? close(direction: direction)
+        : open(direction: direction);
   }
 
   /// Outer Alignment
@@ -408,14 +412,7 @@ class DrawerPlusState extends State<DrawerPlus>
         borderRadius: BorderRadius.circular(
           widget.borderRadius * (1 - _animationController.value),
         ),
-        // TODO: Assign boxShadow default value at constructor
-        boxShadow: widget.boxShadow ??
-            [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 5,
-              )
-            ],
+        boxShadow: widget.boxShadow,
       ),
       child: widget.borderRadius != 0
           ? ClipRRect(
@@ -467,6 +464,7 @@ class DrawerPlusState extends State<DrawerPlus>
         ),
       );
     }
+
     return null;
   }
 
@@ -512,11 +510,13 @@ class DrawerPlusState extends State<DrawerPlus>
   Widget? _trigger(AlignmentDirectional alignment, Widget? child) {
     final drawerIsStart = _position == DrawerPlusDirection.start;
     final padding = MediaQuery.of(context).padding;
-    double dragAreaWidth = drawerIsStart ? padding.left : padding.right;
-
-    if (Directionality.of(context) == TextDirection.rtl) {
-      dragAreaWidth = drawerIsStart ? padding.right : padding.left;
-    }
+    double dragAreaWidth = Directionality.of(context) == TextDirection.rtl
+        ? drawerIsStart
+            ? padding.right
+            : padding.left
+        : drawerIsStart
+            ? padding.left
+            : padding.right;
 
     dragAreaWidth = max(dragAreaWidth, kEdgeDragWidth);
 
@@ -545,14 +545,12 @@ class DrawerPlusState extends State<DrawerPlus>
 
   @override
   Widget build(BuildContext context) {
-    /// initialize the correct width
-    if (_width == 400 ||
-        MediaQuery.of(context).orientation != _orientation) {
+    if (_width == 400 || MediaQuery.of(context).orientation != _orientation) {
       _updateWidth();
       _orientation = MediaQuery.of(context).orientation;
     }
 
-    /// wFactor depends of offset and is used by the second Align that contains the Scaffold
+    // wFactor depends of offset and is used by the second Align that contains the Scaffold
     final double offset = 0.5 - _offset * 0.5;
     final double wFactor = (_animationController.value * (1 - offset)) + offset;
 
@@ -564,7 +562,10 @@ class DrawerPlusState extends State<DrawerPlus>
       child: Stack(
         alignment: _drawerInnerAlignment,
         children: <Widget>[
-          FocusScope(node: _focusScopeNode, child: _animatedChild()),
+          FocusScope(
+            node: _focusScopeNode,
+            child: _animatedChild(),
+          ),
           GestureDetector(
             key: _gestureDetectorKey,
             onTap: () {},
@@ -575,7 +576,7 @@ class DrawerPlusState extends State<DrawerPlus>
             child: RepaintBoundary(
               child: Stack(
                 children: [
-                  ///Gradient
+                  /// Gradient
                   Container(
                     width: _animationController.value == 0 ||
                             _animationType == DrawerPlusAnimation.linear
@@ -593,8 +594,6 @@ class DrawerPlusState extends State<DrawerPlus>
                       ),
                     ),
                   ),
-
-                  ///Trigger
                   _trigger(AlignmentDirectional.centerStart, widget.leftChild),
                   _trigger(AlignmentDirectional.centerEnd, widget.rightChild),
                 ].fold([], (prev, element) {

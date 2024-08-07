@@ -1,3 +1,14 @@
+## 1.1.1
+
+- Update README file.
+- Add more platforms compatibility to example:
+  - linux
+  - macos
+  - web
+  - windows
+- Minor fixes.
+- Fix code formatting.
+
 ## 1.1.0
 
 - **BREAKING CHANGE**

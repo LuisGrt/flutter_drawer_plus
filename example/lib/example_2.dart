@@ -11,7 +11,6 @@ class ExampleTwo extends StatefulWidget {
 class _ExampleTwoState extends State<ExampleTwo> {
   final GlobalKey<DrawerPlusState> _innerDrawerKey =
       GlobalKey<DrawerPlusState>();
-
   final bool _swipe = true;
   DrawerPlusAnimation _animationType = DrawerPlusAnimation.static;
   bool _proportionalChildArea = true;
@@ -21,16 +20,6 @@ class _ExampleTwoState extends State<ExampleTwo> {
   double _scale = 0.9;
   double _borderRadius = 50;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Color currentColor = Colors.black54;
 
   @override
@@ -39,10 +28,11 @@ class _ExampleTwoState extends State<ExampleTwo> {
       key: _innerDrawerKey,
       onTapClose: true,
       offset: DPOffset.only(
-          top: _topBottom ? _verticalOffset : 0.0,
-          bottom: !_topBottom ? _verticalOffset : 0.0,
-          right: _horizontalOffset,
-          left: _horizontalOffset),
+        top: _topBottom ? _verticalOffset : 0.0,
+        bottom: !_topBottom ? _verticalOffset : 0.0,
+        right: _horizontalOffset,
+        left: _horizontalOffset,
+      ),
       scale: DPOffset.horizontal(_scale),
       borderRadius: _borderRadius,
       duration: const Duration(milliseconds: 11200),
@@ -53,13 +43,14 @@ class _ExampleTwoState extends State<ExampleTwo> {
       leftAnimationType: _animationType,
       rightAnimationType: _animationType,
       leftChild: Material(
-          color: Theme.of(context).colorScheme.surface,
-          child: const Center(
-            child: Text(
-              "Left Child",
-              style: TextStyle(fontSize: 18),
-            ),
-          )),
+        color: Theme.of(context).colorScheme.surface,
+        child: const Center(
+          child: Text(
+            "Left Child",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
       rightChild: Material(
         color: Theme.of(context).colorScheme.surface,
         child: const Center(
@@ -97,20 +88,18 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         children: <Widget>[
                           const Text('Static'),
                           Checkbox(
-                              activeColor: Colors.black,
-                              value:
-                                  _animationType == DrawerPlusAnimation.static,
-                              onChanged: (a) {
-                                setState(() {
-                                  _animationType = DrawerPlusAnimation.static;
-                                });
-                              }),
+                            activeColor: Colors.black,
+                            value: _animationType == DrawerPlusAnimation.static,
+                            onChanged: (a) {
+                              setState(() =>
+                                  _animationType = DrawerPlusAnimation.static);
+                            },
+                          ),
                         ],
                       ),
                       onTap: () {
-                        setState(() {
-                          _animationType = DrawerPlusAnimation.static;
-                        });
+                        setState(
+                            () => _animationType = DrawerPlusAnimation.static);
                       },
                     ),
                     GestureDetector(
@@ -122,17 +111,15 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               value:
                                   _animationType == DrawerPlusAnimation.linear,
                               onChanged: (a) {
-                                setState(() {
-                                  _animationType = DrawerPlusAnimation.linear;
-                                });
+                                setState(() => _animationType =
+                                    DrawerPlusAnimation.linear);
                               }),
                           const Text('Linear'),
                         ],
                       ),
                       onTap: () {
-                        setState(() {
-                          _animationType = DrawerPlusAnimation.linear;
-                        });
+                        setState(
+                            () => _animationType = DrawerPlusAnimation.linear);
                       },
                     ),
                     GestureDetector(
@@ -140,28 +127,26 @@ class _ExampleTwoState extends State<ExampleTwo> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Checkbox(
-                              activeColor: Colors.black,
-                              value: _animationType ==
-                                  DrawerPlusAnimation.quadratic,
-                              onChanged: (a) {
-                                setState(() {
-                                  _animationType =
-                                      DrawerPlusAnimation.quadratic;
-                                });
-                              }),
+                            activeColor: Colors.black,
+                            value:
+                                _animationType == DrawerPlusAnimation.quadratic,
+                            onChanged: (a) {
+                              setState(() => _animationType =
+                                  DrawerPlusAnimation.quadratic);
+                            },
+                          ),
                           const Text('Quadratic'),
                         ],
                       ),
                       onTap: () {
-                        setState(() {
-                          _animationType = DrawerPlusAnimation.quadratic;
-                        });
+                        setState(() =>
+                            _animationType = DrawerPlusAnimation.quadratic);
                       },
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                const SizedBox(
+                  height: 20,
                 ),
                 GestureDetector(
                   child: Row(
@@ -171,21 +156,19 @@ class _ExampleTwoState extends State<ExampleTwo> {
                           activeColor: Colors.black,
                           value: _proportionalChildArea == true,
                           onChanged: (a) {
-                            setState(() {
-                              _proportionalChildArea = !_proportionalChildArea;
-                            });
+                            setState(() => _proportionalChildArea =
+                                !_proportionalChildArea);
                           }),
                       const Text('ProportionalChildArea'),
                     ],
                   ),
                   onTap: () {
-                    setState(() {
-                      _proportionalChildArea = !_proportionalChildArea;
-                    });
+                    setState(
+                        () => _proportionalChildArea = !_proportionalChildArea);
                   },
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                const SizedBox(
+                  height: 20,
                 ),
                 Column(
                   children: <Widget>[
@@ -202,7 +185,6 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               ),
                           child: Slider(
                             activeColor: Colors.black,
-                            //inactiveColor: Colors.white,
                             value: _horizontalOffset,
                             min: 0.0,
                             max: 1,
@@ -210,10 +192,8 @@ class _ExampleTwoState extends State<ExampleTwo> {
                             semanticFormatterCallback: (double value) =>
                                 value.round().toString(),
                             label: '$_horizontalOffset',
-                            onChanged: (a) {
-                              setState(() {
-                                _horizontalOffset = a;
-                              });
+                            onChanged: (value) {
+                              setState(() => _horizontalOffset = value);
                             },
                             onChangeEnd: (a) {
                               //_getwidthContainer();
@@ -226,8 +206,8 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                const SizedBox(
+                  height: 20,
                 ),
                 Column(
                   children: <Widget>[
@@ -235,47 +215,22 @@ class _ExampleTwoState extends State<ExampleTwo> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        GestureDetector(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Checkbox(
-                                  activeColor: Colors.black,
-                                  value: _topBottom == true,
-                                  onChanged: (a) {
-                                    setState(() {
-                                      _topBottom = true;
-                                    });
-                                  }),
-                              const Text('Top'),
-                            ],
-                          ),
-                          onTap: () {
-                            setState(() {
-                              _topBottom = true;
-                            });
-                          },
-                        ),
-                        GestureDetector(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Checkbox(
-                                  activeColor: Colors.black,
-                                  value: _topBottom == false,
-                                  onChanged: (a) {
-                                    setState(() {
-                                      _topBottom = false;
-                                    });
-                                  }),
-                              const Text('Bottom'),
-                            ],
-                          ),
-                          onTap: () {
-                            setState(() {
-                              _topBottom = false;
-                            });
-                          },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Checkbox(
+                              activeColor: Colors.black,
+                              value: _topBottom,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  setState(() => _topBottom = value);
+                                }
+                              },
+                            ),
+                            _topBottom
+                                ? const Text('Bottom')
+                                : const Text('Top'),
+                          ],
                         ),
                       ],
                     ),
@@ -291,7 +246,6 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               ),
                           child: Slider(
                             activeColor: Colors.black,
-                            //inactiveColor: Colors.white,
                             value: _verticalOffset,
                             min: 0.0,
                             max: 1,
@@ -299,24 +253,17 @@ class _ExampleTwoState extends State<ExampleTwo> {
                             semanticFormatterCallback: (double value) =>
                                 value.round().toString(),
                             label: '$_verticalOffset',
-                            onChanged: (a) {
-                              setState(() {
-                                _verticalOffset = a;
-                              });
-                            },
-                            onChangeEnd: (a) {
-                              //_getwidthContainer();
-                            },
+                            onChanged: (a) =>
+                                setState(() => _verticalOffset = a),
                           ),
                         ),
                         Text(_verticalOffset.toString()),
-                        //Text(_fontSize.toString()),
                       ],
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                const SizedBox(
+                  height: 20,
                 ),
                 Column(
                   children: <Widget>[
@@ -333,7 +280,6 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               ),
                           child: Slider(
                             activeColor: Colors.black,
-                            //inactiveColor: Colors.white,
                             value: _scale,
                             min: 0.0,
                             max: 1,
@@ -341,25 +287,16 @@ class _ExampleTwoState extends State<ExampleTwo> {
                             semanticFormatterCallback: (double value) =>
                                 value.round().toString(),
                             label: '$_scale',
-                            onChanged: (a) {
-                              setState(
-                                () {
-                                  _scale = a;
-                                },
-                              );
-                            },
+                            onChanged: (a) => setState(() => _scale = a),
                           ),
                         ),
-                        Text(
-                          _scale.toString(),
-                        ),
-                        //Text(_fontSize.toString()),
+                        Text(_scale.toString()),
                       ],
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                const SizedBox(
+                  height: 20,
                 ),
                 Column(
                   children: <Widget>[
@@ -376,7 +313,6 @@ class _ExampleTwoState extends State<ExampleTwo> {
                               ),
                           child: Slider(
                             activeColor: Colors.black,
-                            //inactiveColor: Colors.white,
                             value: _borderRadius,
                             min: 0,
                             max: 100,
@@ -384,15 +320,10 @@ class _ExampleTwoState extends State<ExampleTwo> {
                             semanticFormatterCallback: (double value) =>
                                 value.round().toString(),
                             label: '$_borderRadius',
-                            onChanged: (a) {
-                              setState(() {
-                                _borderRadius = a;
-                              });
-                            },
+                            onChanged: (a) => setState(() => _borderRadius = a),
                           ),
                         ),
                         Text(_borderRadius.toString()),
-                        //Text(_fontSize.toString()),
                       ],
                     ),
                   ],

@@ -190,7 +190,6 @@ class ScaffoldDrawer extends StatelessWidget {
                                 ),
                             child: Slider(
                               activeColor: Colors.black,
-                              //inactiveColor: Colors.white,
                               value: drawer.offset,
                               min: 0.0,
                               max: 1,
@@ -201,15 +200,11 @@ class ScaffoldDrawer extends StatelessWidget {
                               onChanged: (a) {
                                 drawer.setOffset(a);
                               },
-                              onChangeEnd: (a) {
-                                //_getwidthContainer();
-                              },
                             ),
                           ),
                           Text(
                             drawer.offset.toString(),
                           ),
-                          //Text(_fontSize.toString()),
                         ],
                       ),
                     ],
@@ -234,7 +229,8 @@ class ScaffoldDrawer extends StatelessWidget {
                             content: SingleChildScrollView(
                               child: ColorPicker(
                                 pickerColor: drawer.colorTransition,
-                                onColorChanged: (Color color) => drawer.setColorTransition(color: color),
+                                onColorChanged: (Color color) =>
+                                    drawer.setColorTransition(color: color),
                                 //enableLabel: true,
                                 pickerAreaHeightPercent: 0.8,
                               ),
